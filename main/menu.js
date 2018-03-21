@@ -5,13 +5,13 @@ var canvas,
     westY = 400,
     velX = 0,
     velY = 0,
+    maxVelY = 2,
     speed = 3,
-    jumpSpeed = 2,
-    friction = 0.92,
+    inertia = 0.98,
     keys = [],
     jumping = false,
-    starttime,
-    duration = 2000;
+    gravity = .05;
+    
 
 window.onload = function(){
   canvas = document.getElementById("gameCanvas");
@@ -23,10 +23,8 @@ window.onload = function(){
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13' && menuActive == true)
           {
-            console.log(keycode);
             menuActive = false;
             drawLevel();    //intial level draw
-            move();         //moves the character
           }
     });
 }
@@ -44,6 +42,7 @@ function drawMenu() {
 
 //draws the level and character
 function drawLevel() {
+  move();
  ctx.clearRect(0,0,canvas.width, canvas.height);
   ctx.fillStyle = "#c3c3d5";
   ctx.fillRect(0,0,canvas.width,canvas.height);
@@ -51,14 +50,12 @@ function drawLevel() {
   ctx.beginPath();
   ctx.arc(westX,westY,8,0,Math.PI*2,true);
   ctx.fill();
-
+  requestAnimationFrame(drawLevel); //recursively updates the level
 }
 
 //moves character
 function move()
 {
-  requestAnimationFrame(move);  //recursively updates the level
- 
   if (keys[65]) {     //if a is pressed
     if (velX > -speed) {
       velX--;
@@ -69,16 +66,23 @@ function move()
       velX++;
     }
   }
-  if (keys[87] || keys[32])
+  if (keys[87] || keys[32]) //if w or space is pressed
     {
-//       starttime = timestamp || new Date().getTime();
-    stopAnimationFrame(move);
-      jump();
-  
+      velY = -maxVelY; //sets the initial velocity when jumping
+      jumping = true;
     }
-  // velY*= friction;
-  // westY += velY;
-  velX*= friction;
+  if (jumping == true)    //if the character is moving upwards
+    {
+      velY+= gravity;
+      velY*= inertia; 
+      westY += velY;
+      if (westY <= 408 && westY >= 392) //if the ball is on the ground, stop subtracting gravity from Y coord
+        {
+          jumping = false;
+        }
+    }
+ 
+  velX*= inertia;
   westX += velX;
   
   //checks if character is at the edge
@@ -89,30 +93,18 @@ function move()
       {
         westX = 8;
       }
-  drawLevel();
+  if (westY >= canvas.height-8)
+    {
+      westY = canvas.width-8;
+    } else if (westY <= 8)
+      {
+        westY = 8;
+      }
 }
 
-  
-function jump()
-  {
-      // var timestamp = timestamp || new Date().getTime();
-      // var runtime = timestamp - starttime;
-    requestAnimationFrame(jump);
-      if (velY > -jumpSpeed) {
-      velY--;
-    }
-    velY*= friction;
-    westY += velY;
-      // if (runtime < duration) {
-      //   requestAnimationFrame(function(timestamp){
-      //     jump(starttime);
-      //   })
-      // }
-      
-  }
 document.addEventListener("keydown", function(e) {
                           keys[e.keyCode] = true;
                           });
 document.addEventListener("keyup", function(e) {
                           keys[e.keyCode] = false;
-                          });
+});
