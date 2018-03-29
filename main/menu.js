@@ -18,7 +18,11 @@ var canvas,
     gravity = .3,
     platformX = [100,520],
     platformY = [200,110],
-    platformNumber;
+    platformNumber,
+    currentOffsetX = 0,
+    min_offset = 100,
+    max_offset = 900,
+    scrolling = false;
     
 
 window.onload = function(){
@@ -71,11 +75,13 @@ function move()
   if (keys[65]) {     //if a is pressed
     if (velX > -speed) {
       velX--;
+      currentOffsetX++;
     }
   }
   if (keys[68]) {     //if d is pressed
     if (velX < speed) {
       velX++;
+      currentOffsetX--;
     }
   }
   if (keys[87] || keys[32]) //if w or space is pressed
@@ -118,16 +124,27 @@ function move()
           }
       }
     } 
+
   velX*= inertia;
-  westX += velX;
+  currentOffsetX*=inertia;
   
-  //checks if character is at the edge
-  if (westX >= canvas.width-8)
+      westX += velX;
+  
+  if (westX >= max_offset || westX <= 100)
+  {
+    scrolling = true;
+    for(var i = 0; i <= 1; i++)
     {
-      westX = canvas.width-8;
-    } else if (westX <= 8)
+      platformX[i]+=currentOffsetX;
+    }
+  }
+  //checks if character is at the edge
+  if (westX >= max_offset)
+    {
+      westX = max_offset;
+    } else if (westX <= min_offset)
       {
-        westX = 8;
+        westX = min_offset;
       }
   if (westY >= canvas.height-8)
     {
@@ -139,10 +156,11 @@ function move()
 }
 
 document.addEventListener("keydown", function(e) {
-                          doneUp = false
+                          
                           keys[e.keyCode] = true;
+                          max_offset = 900;
                           });
 document.addEventListener("keyup", function(e) {
                           keys[e.keyCode] = false;
-                          doneUp = true;
+                          scrolling = false;
 });
