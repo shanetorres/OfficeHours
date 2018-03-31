@@ -11,8 +11,6 @@ var canvas,
     inertia = 0.92,
     keys = [],
     jumping = false,
-    starttime,
-    duration = 2000,
     onGround = true,
     onPlatform = false,
     gravity = .3,
@@ -23,11 +21,12 @@ var canvas,
     platformNumber,
     currentOffsetX = 0,
     min_offset = 100,
-    max_offset = 900,
-    scrolling = false
+    max_offset = 900, 
+    blockstart = 0,
+    groundBlocks = 20;
     const BLOCK_HEIGHT = 45,
-    BLOCK_WIDTH = 45,
-    blockstart = 0;
+    BLOCK_WIDTH = 45
+   ;
     
 
 window.onload = function(){
@@ -40,7 +39,7 @@ window.onload = function(){
         if (keycode == '13' && menuActive == true)
           {
             menuActive = false;
-            drawLevel();    //intial level draw
+            drawLevel();    //initial level draw
           }
     });
 }
@@ -54,7 +53,6 @@ function drawMenu() {
   ctx.fillText("Office Hours",340,100); 
   ctx.font = "30px Consolas";
   ctx.fillText("Press Enter To Start", 340, 300);
-  drawBlocks(0,600," ", "ground", 30);
 }
 
 //draws the level and character
@@ -63,11 +61,8 @@ function drawLevel() {
   move();
  ctx.clearRect(0,0,canvas.width, canvas.height);
   ctx.fillStyle = "#97CAEF";
-  
-  
   ctx.fillRect(0,0,canvas.width,canvas.height);
-  bigBlock(blockstart, 2, "hotpink", 10, 1);
-  //drawBlocks(0,600,groundBlock, "ground", 30);
+  bigBlock(blockstart, 2, "hotpink", groundBlocks, 1); //draw the ground
   ctx.fillStyle = "black";
   ctx.fillRect(platformX[0], platformY[0], 60, 10);
   ctx.fillRect(platformX[1], platformY[1], 60, 10);
@@ -105,9 +100,9 @@ function move()
       velY+= gravity; //addi
       velY*= inertia; 
       westY += velY;
-      for (var i = 0; i < 10; i++)
+      for (var i = 0; i < groundBlocks; i++)
       {
-      if (westY <= 500 && westY >= 492 && westX <= groundX[i]) //if the ball is on the ground, stop subtracting gravity from Y coord
+      if (westY <= 500 && westY >= 492 && westX <= groundX[i]+45) //if the ball is on the ground, stop subtracting gravity from Y coord
         {
           jumping = false;
           onGround = true;
@@ -136,23 +131,33 @@ function move()
           }
       }
     } 
+  if (onGround == true) //detects if the player is off the ground or not
+    {
+      if ((westY <= 500 && westY >= 492 && westX <= groundX[0]) || (westY <= 500 && westY >= 492 && westX > groundX[groundBlocks-1]+45))
+        {
+          onGround = false;
+          jumping = true;
+        }
+    }
 
   velX*= inertia;
-  currentOffsetX*=inertia;
+  currentOffsetX*=inertia;  //used for sidescrolling, redraws map based on movement
   
       westX += velX;
   
-  if (westX >= max_offset || westX <= 100)
+  if (westX >= max_offset || westX <= 100) //if the character is far enough left or right, the map will move rather than the player
   {
     scrolling = true;
-    for(var i = 0; i <= 1; i++)
+    for(var i = 0; i <= 1; i++) //move the platforms(temporary)
     {
       platformX[i]+=currentOffsetX;
     }
-    // for (var i = 0; i <= 10; i++)
-    // {
-    //   groundX[i]+=currentOffsetX;
-    // }
+    blockstart+=(currentOffsetX/45); //move the ground
+    
+    for (var i = 0; i <= groundBlocks; i++) //update ground x array
+    {
+      groundX[i]+=currentOffsetX;
+    }
   }
   //checks if character is at the edge
   if (westX >= max_offset)
@@ -172,13 +177,10 @@ function move()
 }
 
 document.addEventListener("keydown", function(e) {
-                          
                           keys[e.keyCode] = true;
-                          max_offset = 900;
                           });
 document.addEventListener("keyup", function(e) {
                           keys[e.keyCode] = false;
-                          scrolling = false;
 });
 
 function bigBlock(xIn, yIn, colorIn, sizeXin = 1, sizeYin = 1)
@@ -187,19 +189,16 @@ function bigBlock(xIn, yIn, colorIn, sizeXin = 1, sizeYin = 1)
   //yin = y-axis
   //size = how many steps
   
-  if (westX >= max_offset || westX <= 100)
-  {
+   //xin = x-axis
+  //yin = y-axis
+  //size = how many steps
+  
 
-    xIn+=currentOffsetX;
-    blockstart+=currentOffsetX;
-  }
   sizeX = xIn + sizeXin;
   sizeY = yIn + sizeYin;
   for(var i = xIn; i < sizeX; i++){
     for(var z = yIn; z < sizeY; z++){
-      
-    groundX[i]= i*45+currentOffsetX;
-     console.log(groundX[i]);
+      groundX[i]= i*45;
       stackBlock(i, z, colorIn);
     }
   }
@@ -216,38 +215,13 @@ function stackBlock(xin, yin, colorIn, hide = false){
 
   var sum = (BLOCK_HEIGHT * yin);// + yin;
   var sum2 = (BLOCK_WIDTH * xin);// + xin;
-  //groundY[] = 600-sum*45;
-  //groundX[2] = sum2*45;
   var b_height = canvas.height - sum;
- 
   var b_long = sum2;
-  // if (westX >= max_offset || westX <= 100)
-  // {
-  //   b_long += (currentOffsetX*45);
-  // }
 
   if(hide == false){
-    
     colorRect(b_long, b_height, BLOCK_WIDTH, BLOCK_HEIGHT, colorIn);
-    
    // ctx.drawImage(img, b_long, b_height, BLOCK_WIDTH, BLOCK_HEIGHT);
-
   }
-}
-
-function drawBlocks(xIn, yIn, imgIn, type, total)
-{
-  
-    var img = new Image();
-    document.getElementById(imgIn);
-    ctx.fillStyle = "hotpink";
-    ctx.fillRect(40, 400, 60, 10);
-    // for (var i = 0; i < total; i++)
-    // {
-      //colorRect(xIn, yIn, BLOCK_WIDTH, BLOCK_HEIGHT, "hotpink");
-      xIn += BLOCK_WIDTH;
-    //}
-  
 }
 
 function colorRect(leftX, topY, width, height, drawColor) {
