@@ -1,1 +1,11 @@
-just a demo for rendering.
+NOTES:
+-NEED TO CREATE OWN TILESET, dont leave placeholders.
+
+
+<<<Resources used (open source)>>>
+
+main character:
+https://opengameart.org/content/detective
+
+Background song:
+https://opengameart.org/content/nature-theme-sketch
