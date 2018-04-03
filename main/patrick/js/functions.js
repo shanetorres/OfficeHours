@@ -43,6 +43,11 @@ function block_hit(){//called when the player has jumped up into a block.
 	game_world[Math.floor((player.y-2)/40)][Math.floor((player.x + 27 + current_offset_x)/40)].affect_hit();
 }
 function render_score(){//display the current score.
+ctx.globalAlpha = .8;
+ctx.fillStyle="white";
+ctx.fillRect(0,0,gameCanvas.width,50,);
+ctx.fillStyle="black";
+ctx.globalAlpha = 1;
 ctx.font = "30px Arial";
-ctx.fillText("Score: "+score,10,75);
+ctx.fillText("Score: "+score,45,35);
 }
