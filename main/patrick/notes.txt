@@ -4,8 +4,11 @@ NOTES:
 
 <<<Resources used (open source)>>>
 
-main character:
+main character: <<TODO: modify for our needs.>>
 https://opengameart.org/content/detective
 
 Background song:
 https://opengameart.org/content/nature-theme-sketch
+
+door; taken from: <<TODO: perhaps have door sound?>>
+http://troctribu.info/old-world-front-door/old-world-front-door-home-style-doors-full-size-super-nintendo-mario/
