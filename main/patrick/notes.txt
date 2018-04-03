@@ -1,7 +1,3 @@
-NOTES:
-working on trigger system, also need to work on scrolling up and down. doors seem to be working,
-	but instead of switching worlds you move to a different section on map.
-
 TODO:
 	-improve rendering speed.
 	-decouple updating from rendering, though at this point any decent system will run at the desired speed, with older systems
@@ -9,11 +5,13 @@ TODO:
 	-improve variety of blocks.
 	-customize the main characters animations, as well as appearence.
 	-add enemies, with basic movement/attack mechanisms.
-	-add projectile.
+	-add projectiles
 	-add npc's with dialoque.
+	-add inventory
+	-add quests/missions.
 	-dramatically expand map, add themes to the different sectors.
 		NOTE: improve rendering speed and performance first.
-
+	*-* clean up player.js code, (optimize/clean up reptitive bits)
 
 
 
@@ -32,3 +30,9 @@ http://troctribu.info/old-world-front-door/old-world-front-door-home-style-doors
 
 block hit sound: <<<perhaps modify or add additional for each block type, and add hits for projectiles/enemies.>>>
 https://opengameart.org/content/8-bit-sound-effects-library
+
+tree1/tree2 (background trees):
+https://opengameart.org/content/two-pixelish-tree-sprites
+
+cloud1/cloud2/cloud3:
+https://opengameart.org/content/2d-clouds-pack

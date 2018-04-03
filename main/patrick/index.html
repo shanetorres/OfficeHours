@@ -2,8 +2,10 @@
 <head>
 	<title>Office Hours</title>
 	<meta charset="UTF-8">
+	<script src="js/world.js"></script>
 	<script src="js/background.js"></script>
 	<script src="js/functions.js"></script>
+	<script src="js/images.js"></script>
 </head>
 <body style="background-color: black">
 <center>
@@ -14,54 +16,6 @@
 ctx = document.getElementById('gameCanvas').getContext("2d");//get the context
 current = 0;//manages what stage of looped animations the game is at, for simplicity, everything is synced to this counter, in the range 1-7;
 score = 0;
-player = {}
-player.i_x = 0;//inertia in the x direction.
-player.i_y = 0;//inertia in the y direction.
-player.jumpable = 1;//1 if on the ground and can jump, 0 if not.
-player.facing="right";
-player.current_action="standing";//standing,walking,jumping.
-player.x = 400;//starting position.
-player.y = 480;
-game_world_base = [//1=?block,2=brick,3=ground/brick,4=nailed metal,5=square block.6=blue?
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,2,1,2,0,0,0,0,0,0,0,5,5,5,5,0,0,0,0,0,0,0,0,0,2,2,1,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,1,1,4,1,0,0,0,0,0,0,0,0,5,5,3],
-	[3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,5,5,5,3],
-	[3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,6,0,3],
-	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,0,0,0,5,5,5,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,0,0,3],
-	[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-	[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
-];//generate a world
-game_world = [];//container for the array.
-for (i=0;i<15;i++){//loop over and add the affect_hit function to all base blocks. special blocks have custom functions added in triggers.js
-	y = []
-	for(ii=0;ii<81;ii++){
-		z = {}
-		z.type = game_world_base[i][ii];
-		z.affect_hit=function(){};
-		if (z.type==1){z.affect_hit=function(){score+=25;this.type=4;this.affect_hit =function(){}}};
-		if (z.type==2){z.affect_hit=function(){this.type=0;this.affect_hit =function(){}}};
-		y.push(z);
-	}
-	game_world.push(y);
-}
-playerc = new Image();//load images.
-playerc.src = "images/char.png";
-door = new Image();
-door.src = "images/door.png";
-current_offset_x = 0;
-current_offset_y = 0;
-tileset = new Image();
-tileset.src = "images/tileset.png";
-image_paused = new Image();
-image_paused.src = "images/paused.png";//end image loading
 game_paused = 1;//1 if paused, 0 if not.
 var keysDown = {//tracks which arrow keys are being held down.
 	37 : false,
@@ -78,5 +32,6 @@ window.onload = function(e){pauser();};
 </script>
 <script src="js/triggers.js"></script>
 <script src="js/sound.js"></script>
+<script src="js/player.js"></script>
 </body>
 </html>
