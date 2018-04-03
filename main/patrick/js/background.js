@@ -6,7 +6,7 @@ function render_background(){//render anything meant to be displayed on the back
 	ctx.drawImage(door,2920-current_offset_x,440);
 	ctx.drawImage(door,3160-current_offset_x,440);
 	ctx.globalAlpha=0.5;//faded out for background images (non-foreground),above is anything thats not on the same level as the player,
-	ctx.drawImage(tree1,660-current_offset_x,445);//but still apart of the main area, (like doors)
+	ctx.drawImage(tree1,660-current_offset_x,485);//but still apart of the main area, (like doors)
 	ctx.drawImage(tree2,190-current_offset_x,445);
 	ctx.drawImage(tree1,120-current_offset_x,445);
 	ctx.drawImage(tree2,1060-current_offset_x,445);

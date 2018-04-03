@@ -28,7 +28,7 @@ player.i_y -=.8;
 player.i_x = 0;
 if(keysDown[39]){player.facing="right";player.i_x = 5;};
 if(keysDown[37]){player.facing="left";player.i_x = -5;};
-if(keysDown[38]){if(player.jumpable==1){player.i_y +=19;player.jumpable=0;}};
+if(keysDown[38]){if(player.jumpable==1){player.i_y +=18;player.jumpable=0;}};
 if(player.x < 200){player.x += 5;current_offset_x -=5;}
 if(player.x > 600){player.x -= 5;current_offset_x +=5;}
 if (player.i_x >0){//trying to go right
