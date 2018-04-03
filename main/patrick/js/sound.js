@@ -15,3 +15,4 @@ myAudio.addEventListener('ended', function() {
 }, false);
 myAudio.play();
 block_hit_sound = new sound("sounds/block_hit.mp3");//load the block hit sound, played when you jump up into a block.
+door_open_sound = new sound("sounds/dooropen1.mp3");//door opening sound

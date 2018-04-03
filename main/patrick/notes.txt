@@ -36,3 +36,6 @@ https://opengameart.org/content/two-pixelish-tree-sprites
 
 cloud1/cloud2/cloud3:
 https://opengameart.org/content/2d-clouds-pack
+
+door opening sound:
+https://opengameart.org/content/door-open-door-close-set
