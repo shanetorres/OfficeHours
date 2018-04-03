@@ -1,6 +1,23 @@
 NOTES:
--NEED TO CREATE OWN TILESET, dont leave placeholders.
+working on trigger system, also need to work on scrolling up and down. doors seem to be working,
+	but instead of switching worlds you move to a different section on map.
 
+TODO:
+	-improve rendering speed.
+	-decouple updating from rendering, though at this point any decent system will run at the desired speed, with older systems
+		running a tad bit slower. (not gamebreaking though)
+	-improve variety of blocks.
+	-customize the main characters animations, as well as appearence.
+	-add enemies, with basic movement/attack mechanisms.
+	-add projectile.
+	-add npc's with dialoque.
+	-dramatically expand map, add themes to the different sectors.
+		NOTE: improve rendering speed and performance first.
+
+
+
+
+-NEED TO CREATE OWN TILESET, dont leave placeholders.
 
 <<<Resources used (open source)>>>
 
@@ -12,3 +29,6 @@ https://opengameart.org/content/nature-theme-sketch
 
 door; taken from: <<TODO: perhaps have door sound?>>
 http://troctribu.info/old-world-front-door/old-world-front-door-home-style-doors-full-size-super-nintendo-mario/
+
+block hit sound: <<<perhaps modify or add additional for each block type, and add hits for projectiles/enemies.>>>
+https://opengameart.org/content/8-bit-sound-effects-library

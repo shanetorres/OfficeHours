@@ -1,4 +1,4 @@
-function clear_canvas(){
+function clear_canvas(){//clears the canvas.
 ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 }
 function pauser(){//handle pausing/unpausing the game.
@@ -11,9 +11,8 @@ function pauser(){//handle pausing/unpausing the game.
 		menu("paused");
 	}		
 }
-function update(){
-	last_call -=.5;
-	//updates the game state, and renders the next frame.
+function update(){//updates and renders the next frame of the game. right now the game is framerate dependant, decoupling would prob be wise.
+	last_call -=.5;//updates the game state, and renders the next frame.
 	clear_canvas();
 	render_world();
 	update_player();
@@ -38,13 +37,7 @@ function render_world(){
 		}
 	}
 }
-function render_background(){
-	ctx.drawImage(door,2080-current_offset_x,440);
-	ctx.drawImage(door,2240-current_offset_x,440);
-	ctx.drawImage(door,2920-current_offset_x,440);
-	ctx.drawImage(door,3160-current_offset_x,440);
-}
-function update_player(){
+function update_player(){//update the players position.
 player.current_action="standing";
 player.i_y -=.8;
 player.i_x = 0;
@@ -95,11 +88,10 @@ if (player.i_y >0){//going up
 }
 function block_hit(){//called when the player has jumped up into a block.
 	block_hit_sound.play();//eventually we can change sound per block type.
-	console.log(Math.floor((player.y-2)/40)+","+Math.floor((player.x + 3 + current_offset_x)/40)+" - "+Math.floor((player.y-2)/40)+","+Math.floor((player.x + 27 + current_offset_x)/40));
 	game_world[Math.floor((player.y-2)/40)][Math.floor((player.x + 3 + current_offset_x)/40)].affect_hit();
 	game_world[Math.floor((player.y-2)/40)][Math.floor((player.x + 27 + current_offset_x)/40)].affect_hit();
 }
-function render_player(){
+function render_player(){//render the player, using the state data in the player object. handles animations & stuff.
 	current+=.3;
 	if (current>7){current=0;};
 	if (player.facing == "left"){
@@ -115,23 +107,7 @@ function render_player(){
 	}else{ctx.drawImage(playerc,25*7,1,25,43,player.x,player.y,30,40);}
 	}
 }
-function render_score(){
+function render_score(){//display the current score.
 ctx.font = "30px Arial";
-ctx.fillText("Score: "+score,10,50);
-}
-function sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
-    this.play = function(){this.sound.play();}
-	this.stop = function(){this.sound.pause();}
-}
-function switch_bg(){
-	if(last_call <-2){last_call=1;
-	if(bg_col==1){document.getElementById("gameCanvas").style.backgroundColor = "lightblue";bg_col=2;
-	}else{document.getElementById("gameCanvas").style.backgroundColor = "#3BB9FF";bg_col=1;
-	}}
+ctx.fillText("Score: "+score,10,75);
 }

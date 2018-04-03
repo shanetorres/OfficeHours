@@ -2,6 +2,7 @@
 <head>
 	<title>Office Hours</title>
 	<meta charset="UTF-8">
+	<script src="js/background.js"></script>
 	<script src="js/functions.js"></script>
 </head>
 <body style="background-color: black">
@@ -10,16 +11,16 @@
 	<img src="images/controls.png"/>
 </center>
 <script>
+ctx = document.getElementById('gameCanvas').getContext("2d");//get the context
 current = 0;//manages what stage of looped animations the game is at, for simplicity, everything is synced to this counter, in the range 1-7;
 score = 0;
 player = {}
-player.type = "player";
-player.i_x = 0;
-player.i_y = 0;
-player.jumpable = 1;
+player.i_x = 0;//inertia in the x direction.
+player.i_y = 0;//inertia in the y direction.
+player.jumpable = 1;//1 if on the ground and can jump, 0 if not.
 player.facing="right";
 player.current_action="standing";//standing,walking,jumping.
-player.x = 400;
+player.x = 400;//starting position.
 player.y = 480;
 game_world_base = [//1=?block,2=brick,3=ground/brick,4=nailed metal,5=square block.6=blue?
 	[3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
@@ -39,7 +40,7 @@ game_world_base = [//1=?block,2=brick,3=ground/brick,4=nailed metal,5=square blo
 	[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
 ];//generate a world
 game_world = [];//container for the array.
-for (i=0;i<15;i++){
+for (i=0;i<15;i++){//loop over and add the affect_hit function to all base blocks. special blocks have custom functions added in triggers.js
 	y = []
 	for(ii=0;ii<81;ii++){
 		z = {}
@@ -51,9 +52,7 @@ for (i=0;i<15;i++){
 	}
 	game_world.push(y);
 }
-game_world[10][68].affect_hit=function(){switch_bg();};
-ctx = document.getElementById('gameCanvas').getContext("2d");
-playerc = new Image();
+playerc = new Image();//load images.
 playerc.src = "images/char.png";
 door = new Image();
 door.src = "images/door.png";
@@ -62,30 +61,22 @@ current_offset_y = 0;
 tileset = new Image();
 tileset.src = "images/tileset.png";
 image_paused = new Image();
-image_paused.src = "images/paused.png";
-game_paused = 1;
-var keysDown = {
+image_paused.src = "images/paused.png";//end image loading
+game_paused = 1;//1 if paused, 0 if not.
+var keysDown = {//tracks which arrow keys are being held down.
 	37 : false,
 	38 : false,
 	39 : false,
 	40 : false
 };
-window.addEventListener("keydown", function(e) {
+window.addEventListener("keydown", function(e) {//event listeners for 'e', 'p' and the arrow keys.
 		if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = true; }
 		if(e.keyCode == 69){game_world[Math.floor((player.y+15)/40)][Math.floor((player.x + 15 + current_offset_x)/40)].affect_hit();};//trigger the effect for the block.
 		if(e.keyCode == 80){pauser();}});
 window.addEventListener("keyup", function(e) {if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = false; }});
-window.onload = function(e){
-myAudio = new Audio('sounds/bg.wav'); 
-myAudio.addEventListener('ended', function() {
-    this.currentTime = 0;
-    this.play();
-}, false);
-myAudio.play();
-pauser();
-block_hit_sound = new sound("sounds/block_hit.mp3");
-}
+window.onload = function(e){pauser();};
 </script>
 <script src="js/triggers.js"></script>
+<script src="js/sound.js"></script>
 </body>
 </html>
