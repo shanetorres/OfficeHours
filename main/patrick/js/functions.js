@@ -5,9 +5,11 @@ function pauser(){//handle pausing/unpausing the game.
 	if(game_paused == 1){
 		game_paused=0;
 		update_tick = window.setInterval(update,20);
+		update_timer = window.setInterval(updatet,1000);
 	}else{
 		game_paused=1;
 		clearInterval(update_tick);
+		clearInterval(update_timer);
 		menu("paused");
 	}		
 }
@@ -17,6 +19,8 @@ function update(){//updates and renders the next frame of the game. right now th
 	render_world();
 	update_player();
 	render_player();
+	update_enemies();//this is also new. see below.
+	render_enemies(); ///THIS IS NEW. ADDED IN ENEMY PATCH. see enemies.js
 	render_score();
 }
 function menu(men){
@@ -45,9 +49,13 @@ function block_hit(){//called when the player has jumped up into a block.
 function render_score(){//display the current score.
 ctx.globalAlpha = .8;
 ctx.fillStyle="white";
-ctx.fillRect(0,0,gameCanvas.width,50,);
+ctx.fillRect(0,0,gameCanvas.width,40,);
 ctx.fillStyle="black";
 ctx.globalAlpha = 1;
 ctx.font = "30px Arial";
 ctx.fillText("Score: "+score,45,35);
+ctx.fillText("Timer: "+timer,gameCanvas.width-155,30);
+}
+function updatet(){
+	timer++;
 }
