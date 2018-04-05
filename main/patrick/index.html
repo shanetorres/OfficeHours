@@ -6,6 +6,7 @@
 	<script src="js/background.js"></script>
 	<script src="js/functions.js"></script>
 	<script src="js/images.js"></script>
+	<script src="js/enemies.js"></script>
 </head>
 <body style="background-color: black">
 <center>
@@ -16,6 +17,7 @@
 ctx = document.getElementById('gameCanvas').getContext("2d");//get the context
 current = 0;//manages what stage of looped animations the game is at, for simplicity, everything is synced to this counter, in the range 1-7;
 score = 0;
+timer=0;
 game_paused = 1;//1 if paused, 0 if not.
 var keysDown = {//tracks which arrow keys are being held down.
 	37 : false,
@@ -26,7 +28,8 @@ var keysDown = {//tracks which arrow keys are being held down.
 window.addEventListener("keydown", function(e) {//event listeners for 'e', 'p' and the arrow keys.
 		if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = true; }
 		if(e.keyCode == 69){game_world[Math.floor((player.y+15)/40)][Math.floor((player.x + 15 + current_offset_x)/40)].affect_hit();};//trigger the effect for the block.
-		if(e.keyCode == 80){pauser();}});
+		if(e.keyCode == 80){pauser();}
+		if(e.keyCode == 32){shooter();}});
 window.addEventListener("keyup", function(e) {if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = false; }});
 window.onload = function(e){pauser();};
 </script>
@@ -35,7 +38,6 @@ window.onload = function(e){pauser();};
 <script src="js/player.js"></script>
 <script src="js/npc.js"></script>
 <script src="js/projectiles.js"></script>
-<script src="js/enemies.js"></script>
 <script src="js/dialoque.js"></script>
 </body>
 </html>
