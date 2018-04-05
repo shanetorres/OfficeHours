@@ -4,7 +4,7 @@ TODO:
 		running a tad bit slower. (not gamebreaking though)
 	-improve variety of blocks.
 	-customize the main characters animations, as well as appearence.
-	-add enemies, with basic movement/attack mechanisms.
+	-add enemies, with basic movement/attack mechanisms. //in progress.
 	-add projectiles
 	-add npc's with dialoque.
 	-add inventory
