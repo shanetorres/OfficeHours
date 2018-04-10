@@ -54,8 +54,13 @@ ctx.fillStyle="black";
 ctx.globalAlpha = 1;
 ctx.font = "30px Arial";
 ctx.fillText("Score: "+score,45,35);
-ctx.fillText("Timer: "+timer,gameCanvas.width-155,30);
+ctx.fillText("Time "+minute+":"+second,gameCanvas.width-155,30);
 }
 function updatet(){
-	timer++;
+	second++;
+    if (second >= 60)
+        {
+            minute++;
+            second= second-60; 
+        }
 }
