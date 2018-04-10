@@ -21,7 +21,7 @@ function update(){//updates and renders the next frame of the game. right now th
 	render_player();
 	update_enemies();//this is also new. see below.
 	render_enemies(); ///THIS IS NEW. ADDED IN ENEMY PATCH. see enemies.js
-	render_score();
+	render_gui();
 }
 function menu(men){
 	if(men == "paused"){
@@ -46,17 +46,34 @@ function block_hit(){//called when the player has jumped up into a block.
 	game_world[Math.floor((player.y-2)/40)][Math.floor((player.x + 3 + current_offset_x)/40)].affect_hit();
 	game_world[Math.floor((player.y-2)/40)][Math.floor((player.x + 27 + current_offset_x)/40)].affect_hit();
 }
-function render_score(){//display the current score, health and time.
-ctx.globalAlpha = .8;
-ctx.fillStyle="white";
-ctx.fillRect(0,0,gameCanvas.width,40);
-ctx.fillStyle="black";
-ctx.globalAlpha = 1;
-ctx.font = "30px Arial";
-ctx.fillText("Score: "+score,45,35);
-ctx.fillText("Time "+minute+":"+second,gameCanvas.width-175,30);
-ctx.fillText("Health: ",(gameCanvas.width / 2) - ((24 * currentHealth) + 75), 30);
-ctx.drawImage(heart, (gameCanvas.width / 2) - (12 * currentHealth),8);
+function render_gui(){
+    ctx.globalAlpha = .8;
+    ctx.fillStyle="white";
+    ctx.fillRect(0,0,gameCanvas.width,40);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle="black";
+    ctx.font = "30px Arial";
+    currentPlace = 40;
+    render_health();
+    render_time();
+    render_score();
+}
+function render_health(){//display current health.
+    ctx.fillText("Health: ", currentPlace, 30);
+    currentPlace = currentPlace + 100;
+    for(i=0; i<currentHealth; i++){//loop to display all hearts
+        ctx.drawImage(heart, currentPlace, 8);
+        currentPlace = currentPlace + 32;
+}
+}
+function render_time(){//display current time.
+    remainingSpace = ((gameCanvas.width-(currentPlace+280))/2)
+    currentPlace = remainingSpace+currentPlace;
+    ctx.fillText("Time "+minute+":"+second,currentPlace,30);
+    currentPlace = currentPlace+remainingSpace+120;
+}
+function render_score(){//display the current score.
+ctx.fillText("Score: "+score,currentPlace,30);
 }
 function updatet(){
 	second++;
