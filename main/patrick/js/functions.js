@@ -58,9 +58,12 @@ ctx.fillText("Time "+minute+":"+second,gameCanvas.width-155,30);
 }
 function updatet(){
 	second++;
+    if (second < 10)
+        second = "0"+second;
+            
     if (second >= 60)
         {
             minute++;
-            second= second-60; 
+            second = second-60; 
         }
 }
