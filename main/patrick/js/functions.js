@@ -49,7 +49,7 @@ function block_hit(){//called when the player has jumped up into a block.
 function render_score(){//display the current score.
 ctx.globalAlpha = .8;
 ctx.fillStyle="white";
-ctx.fillRect(0,0,gameCanvas.width,40,);
+ctx.fillRect(0,0,gameCanvas.width,40);
 ctx.fillStyle="black";
 ctx.globalAlpha = 1;
 ctx.font = "30px Arial";
@@ -58,12 +58,12 @@ ctx.fillText("Time "+minute+":"+second,gameCanvas.width-155,30);
 }
 function updatet(){
 	second++;
-    if (second < 10)
-        second = "0"+second;
-            
+    
     if (second >= 60)
         {
             minute++;
             second = second-60; 
         }
+    if (second < 10)
+        second = "0"+second;
 }
