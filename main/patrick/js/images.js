@@ -18,3 +18,5 @@ cloud2 = new Image();
 cloud2.src = "images/cloud2.PNG";
 cloud3 = new Image();
 cloud3.src = "images/cloud3.PNG";
+heart = new Image();
+heart.src = "images/heart.PNG";
