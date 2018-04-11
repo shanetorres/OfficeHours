@@ -71,3 +71,23 @@ if (player.i_y >0){//going up
 }
 }
 }
+
+
+//Player Level and Health Handling
+//initialize health and level
+playerLevel = 1;
+maxHealth = 3;
+currentHealth = maxHealth; //start player at full health
+
+
+//call if player loses health from an enemy attack
+function player_hurt(){
+    currentHealth--;
+}
+
+//call when player gets enough score to level up
+function level_up(){
+    playerLevel++;
+    maxHealth++; //increase max health
+    currentHealth = maxHealth; //heal player to full health
+}

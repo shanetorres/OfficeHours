@@ -49,32 +49,47 @@ function block_hit(){//called when the player has jumped up into a block.
 function render_gui(){
     ctx.globalAlpha = .8;
     ctx.fillStyle="white";
-    ctx.fillRect(0,0,gameCanvas.width,40);
+    ctx.fillRect(0,0,gameCanvas.width,40); //top bar
+    ctx.fillRect(0,560,gameCanvas.width,40); //bottom bar
     ctx.globalAlpha = 1;
     ctx.fillStyle="black";
     ctx.font = "30px Arial";
     currentPlace = 40;
-    render_health();
-    render_time();
-    render_score();
+    render_top();
+    render_bottom();
 }
-function render_health(){//display current health.
-    ctx.fillText("Health: ", currentPlace, 30);
+    
+function render_top(){//display time, name and Score.
+    ctx.fillText("Score: "+score,40,30);
+    ctx.fillText("OFFICE HOURS",375,30);
+    ctx.fillText("Time "+minute+":"+second,840,30);
+    
+}//end render_top
+
+function render_bottom(){//display current health.
+    ctx.fillText("Health: ", currentPlace, 590);
     currentPlace = currentPlace + 100;
-    for(i=0; i<currentHealth; i++){//loop to display all hearts
-        ctx.drawImage(heart, currentPlace, 8);
-        currentPlace = currentPlace + 32;
-}
-}
-function render_time(){//display current time.
-    remainingSpace = ((gameCanvas.width-(currentPlace+280))/2)
-    currentPlace = remainingSpace+currentPlace;
-    ctx.fillText("Time "+minute+":"+second,currentPlace,30);
-    currentPlace = currentPlace+remainingSpace+120;
-}
-function render_score(){//display the current score.
-ctx.fillText("Score: "+score,currentPlace,30);
-}
+    
+    if (currentHealth == maxHealth){//if at full health
+        for(i=0; i<currentHealth; i++){//loop to display all hearts
+            ctx.drawImage(heart, currentPlace, 570);
+            currentPlace = currentPlace + 32;
+        }//end for
+    }//end if
+    
+    else{//if current health is less than max
+        for(i=0; i<currentHealth; i++){//loop to display all hearts
+            ctx.drawImage(heart, currentPlace, 8);
+            currentPlace = currentPlace + 32;
+            }//end for
+        for(i=0; i<(maxHealth - currentHealth); i++){//loop to display lost hearts
+            ctx.drawImage(hurtheart, currentPlace, 8);
+            currentPlace = currentPlace + 32;
+            }//end for
+        }//end else
+    ctx.fillText("Player Level: "+playerLevel, 760, 590);    
+}//end render_bottom
+
 function updatet(){
 	second++;
     
