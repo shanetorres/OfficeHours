@@ -47,13 +47,13 @@ function block_hit(){//called when the player has jumped up into a block.
 	game_world[Math.floor((player.y-2)/40)][Math.floor((player.x + 27 + current_offset_x)/40)].affect_hit();
 }
 function render_gui(){
-    ctx.globalAlpha = .8;
+    ctx.globalAlpha = .7;
     ctx.fillStyle="white";
     ctx.fillRect(0,0,gameCanvas.width,40); //top bar
     ctx.fillRect(0,560,gameCanvas.width,40); //bottom bar
     ctx.globalAlpha = 1;
     ctx.fillStyle="black";
-    ctx.font = "30px Arial";
+    ctx.font = "30px Mario";
     currentPlace = 40;
     render_top();
     render_bottom();
@@ -68,7 +68,7 @@ function render_top(){//display time, name and Score.
 
 function render_bottom(){//display current health.
     ctx.fillText("Health: ", currentPlace, 590);
-    currentPlace = currentPlace + 100;
+    currentPlace = currentPlace + 120;
     
     if (currentHealth == maxHealth){//if at full health
         for(i=0; i<currentHealth; i++){//loop to display all hearts
