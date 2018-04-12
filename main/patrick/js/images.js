@@ -22,3 +22,5 @@ heart = new Image();
 heart.src = "images/heart.PNG";
 hurtheart = new Image();
 hurtheart.src = "images/hurtheart.PNG";
+image_level_up = new Image();
+image_level_up.src = "images/level_up.png";

@@ -32,6 +32,14 @@ function menu(men){
 		ctx.globalAlpha=1.0;
 		ctx.drawImage(image_paused, 0, 0);
 	}
+    if(men == "level_up"){
+		//code to show the level up screen.
+		ctx.globalAlpha=0.4;
+		ctx.fillStyle="white";
+		ctx.fillRect(0,0,1000,600);
+		ctx.globalAlpha=1.0;
+		ctx.drawImage(image_level_up, 0, 0);
+	}
 }
 function render_world(){
 	render_background();
@@ -79,11 +87,11 @@ function render_bottom(){//display current health.
     
     else{//if current health is less than max
         for(i=0; i<currentHealth; i++){//loop to display all hearts
-            ctx.drawImage(heart, currentPlace, 8);
+            ctx.drawImage(heart, currentPlace, 570);
             currentPlace = currentPlace + 32;
             }//end for
         for(i=0; i<(maxHealth - currentHealth); i++){//loop to display lost hearts
-            ctx.drawImage(hurtheart, currentPlace, 8);
+            ctx.drawImage(hurtheart, currentPlace, 570);
             currentPlace = currentPlace + 32;
             }//end for
         }//end else

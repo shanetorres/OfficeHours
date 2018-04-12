@@ -76,7 +76,7 @@ if (player.i_y >0){//going up
 //Player Level and Health Handling
 //initialize health and level
 playerLevel = 1;
-maxHealth = 3;
+maxHealth = 1;
 currentHealth = maxHealth; //start player at full health
 
 
@@ -85,9 +85,29 @@ function player_hurt(){
     currentHealth--;
 }
 
+//give player points for breaking block
+function score_block(){
+    score += 25;
+    can_level_up();
+    console.log("Current score  "+score);
+}
+
+//call when player earns points to check if they have enough to level up
+function can_level_up(){
+    if (score >= playerLevel * 450)
+        level_up();
+    
+    console.log("Current level  "+playerLevel);
+}
+
 //call when player gets enough score to level up
 function level_up(){
     playerLevel++;
     maxHealth++; //increase max health
     currentHealth = maxHealth; //heal player to full health
+    game_paused=1;
+    clearInterval(update_tick);
+    clearInterval(update_timer);
+    menu("level_up");
+    console.log("Level Up");
 }
