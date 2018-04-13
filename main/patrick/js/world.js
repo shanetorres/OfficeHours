@@ -37,14 +37,14 @@ game_world_level1 = [//1=chest,2=brick,3=grass,4=wood,5=stone,6=blue?
 ];//generate level 1
 
 //start with first level
-current_game_world = game_world_base;
+current_world = game_world_base;
 
 game_world = [];//container for the array.
-for (i=0;i<current_game_world.length;i++){//loop over and add the affect_hit function to all base blocks. special blocks have custom functions added in triggers.js
+for (i=0;i<current_world.length;i++){//loop over and add the affect_hit function to all base blocks. special blocks have custom functions added in triggers.js
 	y = []
-	for(ii=0;ii<current_game_world[0].length;ii++){
+	for(ii=0;ii<current_world[0].length;ii++){
 		z = {}
-		z.type = current_game_world[i][ii];
+		z.type = current_world[i][ii];
 		z.affect_hit=function(){};
 		if (z.type==1){z.affect_hit=function(){score_block();this.type=4;this.affect_hit =function(){}}};
 		if (z.type==2){z.affect_hit=function(){this.type=0;this.affect_hit =function(){}}};
@@ -56,8 +56,8 @@ for (i=0;i<current_game_world.length;i++){//loop over and add the affect_hit fun
 //transition to level 1 map
 function go_level1(){
     console.log("Test");
-    player.x = 400;//starting position.
-    current_game_world = game_world_level1;
+    
+    current_world = game_world_level1;
     console.log("This");
     
 }
