@@ -22,7 +22,10 @@ current = 0;//manages what stage of looped animations the game is at, for simpli
 score = 0;
 second = 00;
 minute = 0;
-
+paperNo = 0;
+paperShown = false;
+// var paper = {shown: false, x: 0, y: 0, direction: ' ' };
+papers = [];
 game_paused = 1;//1 if paused, 0 if not.
 var keysDown = {//tracks which arrow keys are being held down.
 	37 : false,
@@ -34,8 +37,8 @@ window.addEventListener("keydown", function(e) {//event listeners for 'e', 'p' a
 		if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = true; }
 		if(e.keyCode == 69){game_world[Math.floor((player.y+15)/40)][Math.floor((player.x + 15 + current_offset_x)/40)].affect_hit();};//trigger the effect for the block.
 		if(e.keyCode == 80){pauser();}
-		if(e.keyCode == 32){shooter();}});
-window.addEventListener("keyup", function(e) {if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = false; }});
+		if(e.keyCode == 32){keysDOwn[e.keyCode] = true; shoot();}});
+window.addEventListener("keyup", function(e) {if(e.keyCode>=37 && e.keyCode<=40 || e.keycode === 32) { keysDown[e.keyCode] = false; }});
 window.onload = function(e){pauser();};
 </script>
 <script src="js/triggers.js"></script>
