@@ -26,6 +26,15 @@ function update_player(){//update the players position.
 player.current_action="standing";
 player.i_y -=.8;
 player.i_x = 0;
+	
+if (keysDown[32]) {console.log(paperNo);
+	for (var i = 0; i < paperNo; i++) {
+		ctx.drawImage(papers[i].image, papers[i].x, papers[i].y, 20, 20); 
+	if(papers[i].direction === "right") { papers[i].x += 10; }
+	else if (papers[i].direction === "left") { papers[i].x -= 10; }
+}
+	
+};
 if(keysDown[39]){player.facing="right";player.i_x = 5;};
 if(keysDown[37]){player.facing="left";player.i_x = -5;};
 if(keysDown[38]){if(player.jumpable==1){player.i_y +=18;player.jumpable=0;}};
