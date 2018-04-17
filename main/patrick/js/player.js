@@ -27,26 +27,22 @@ player.current_action="standing";
 player.i_y -=.8;
 player.i_x = 0;
 
-for (var i = 0; i < paperNo; i++)
-{
-	if(paperNo > 0)
-	{
-	if(papers[i].x > papers[i].initialX + paperMaxDist && papers[i].direction == "right")
-	{
-		papers.splice(i,1);
-		paperNo--;
-
-	}
-	else if(papers[i].x < papers[i].initialX - paperMaxDist && papers[i].direction == "left")
-	{
+for (var i = 0; i < paperNo; i++){
+	if(paperNo > 0) {
+	if(papers[i].x > papers[i].initialX + paperMaxDist && papers[i].direction == "right") {
 		papers.splice(i,1);
 		paperNo--;
 	}
-	// if((game_world[Math.floor((papers[i].y+5)/40)][Math.floor(((papers[i].x - 1) + current_offset_x)/40)].type == 7) && 
-	// (game_world[Math.floor((papers[i].y+35)/40)][Math.floor(((papers[i].x - 1) + current_offset_x)/40)].type == 7))
-	// {
-	// 	console.log("hit");
-	// }
+	else if(papers[i].x < papers[i].initialX - paperMaxDist && papers[i].direction == "left") {
+		papers.splice(i,1);
+		paperNo--;
+	}
+	if((game_world[Math.floor((papers[i].y+5)/40)][Math.floor(((papers[i].x - 1) + current_offset_x)/40)].type != 0) && 
+	(game_world[Math.floor((papers[i].y+35)/40)][Math.floor(((papers[i].x - 1) + current_offset_x)/40)].type != 0))
+	{
+		papers.splice(i,1);
+		paperNo--;
+	}
 }
 }
 
