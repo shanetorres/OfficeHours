@@ -26,3 +26,5 @@ image_level_up = new Image();
 image_level_up.src = "images/level_up.png";
 paper = new Image();
 paper.src = "images/paper.png";
+image_game_over = new Image();
+image_game_over.src = "images/game_over.png";

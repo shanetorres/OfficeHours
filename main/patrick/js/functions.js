@@ -40,6 +40,14 @@ function menu(men){
 		ctx.globalAlpha=1.0;
 		ctx.drawImage(image_level_up, 0, 0);
 	}
+    if(men == "has_died"){
+		//code to show the level up screen.
+		ctx.globalAlpha=0.4;
+		ctx.fillStyle="white";
+		ctx.fillRect(0,0,1000,600);
+		ctx.globalAlpha=1.0;
+		ctx.drawImage(image_game_over, 0, 0);
+	}
 }
 function render_world(){
 	render_background();

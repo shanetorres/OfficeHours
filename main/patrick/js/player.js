@@ -112,10 +112,27 @@ playerLevel = 1;
 maxHealth = 1;
 currentHealth = maxHealth; //start player at full health
 
-
 //call if player loses health from an enemy attack
 function player_hurt(){
     currentHealth--;
+    can_die();
+}
+
+//call when player loses health to see if they have died
+function can_die(){
+    if (currentHealth <= 0)
+        has_died();
+    
+    console.log("Can die?");
+}
+
+//call when player dies
+function has_died(){
+    game_paused=1;
+    clearInterval(update_tick);
+    clearInterval(update_timer);
+    menu("has_died");
+    console.log("You died.");
 }
 
 //give player points for breaking block
