@@ -24,3 +24,5 @@ hurtheart = new Image();
 hurtheart.src = "images/hurtheart.PNG";
 image_level_up = new Image();
 image_level_up.src = "images/level_up.png";
+paper = new Image();
+paper.src = "images/paper.png";

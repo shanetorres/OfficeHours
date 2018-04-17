@@ -26,12 +26,36 @@ function update_player(){//update the players position.
 player.current_action="standing";
 player.i_y -=.8;
 player.i_x = 0;
-	
+
+for (var i = 0; i < paperNo; i++)
+{
+	if(paperNo > 0)
+	{
+	if(papers[i].x > papers[i].initialX + paperMaxDist && papers[i].direction == "right")
+	{
+		papers.splice(i,1);
+		paperNo--;
+
+	}
+	else if(papers[i].x < papers[i].initialX - paperMaxDist && papers[i].direction == "left")
+	{
+		papers.splice(i,1);
+		paperNo--;
+	}
+	// if((game_world[Math.floor((papers[i].y+5)/40)][Math.floor(((papers[i].x - 1) + current_offset_x)/40)].type == 7) && 
+	// (game_world[Math.floor((papers[i].y+35)/40)][Math.floor(((papers[i].x - 1) + current_offset_x)/40)].type == 7))
+	// {
+	// 	console.log("hit");
+	// }
+}
+}
+
 if (keysDown[32]) {console.log(paperNo);
 	for (var i = 0; i < paperNo; i++) {
 		ctx.drawImage(papers[i].image, papers[i].x, papers[i].y, 20, 20); 
 	if(papers[i].direction === "right") { papers[i].x += 10; }
-	else if (papers[i].direction === "left") { papers[i].x -= 10; }
+	else if (papers[i].direction === "left") { papers[i].x -= 10; 
+	}
 }
 	
 };
@@ -41,15 +65,17 @@ if(keysDown[38]){if(player.jumpable==1){player.i_y +=18;player.jumpable=0;}};
 if(player.x < 200){player.x += 5;current_offset_x -=5;}
 if(player.x > 600){player.x -= 5;current_offset_x +=5;}
 if (player.i_x >0){//trying to go right
-	for(i=0;i<(player.i_x);i++){
-	if((game_world[Math.floor((player.y+5)/40)][Math.floor((player.x + 31 + current_offset_x)/40)].type ==0) && (game_world[Math.floor((player.y+35)/40)][Math.floor((player.x + 31 + current_offset_x)/40)].type ==0)){
+	for(i=0;i<(player.i_x);i++){ 
+	if((game_world[Math.floor((player.y+5)/40)][Math.floor((player.x + 31 + current_offset_x)/40)].type ==0) && 
+		(game_world[Math.floor((player.y+35)/40)][Math.floor((player.x + 31 + current_offset_x)/40)].type ==0)){
 		player.x +=1;
 		player.current_action="walking";
 	}
 	}
 }else if(player.i_x <0){//going left.
 	for(i=0;i< -player.i_x;i++){
-		if((game_world[Math.floor((player.y+5)/40)][Math.floor(((player.x - 1) + current_offset_x)/40)].type ==0) && (game_world[Math.floor((player.y+35)/40)][Math.floor(((player.x - 1) + current_offset_x)/40)].type ==0)){
+		if((game_world[Math.floor((player.y+5)/40)][Math.floor(((player.x - 1) + current_offset_x)/40)].type ==0) && 
+		(game_world[Math.floor((player.y+35)/40)][Math.floor(((player.x - 1) + current_offset_x)/40)].type ==0)){
 		player.x -=1;
 		player.current_action="walking";
 	}
@@ -58,7 +84,8 @@ if (player.i_x >0){//trying to go right
 if (player.i_y >0){//going up
 	for(i=0;i<(player.i_y);i++){
 		if (player.y>3){
-	if((game_world[Math.floor((player.y-1)/40)][Math.floor((player.x + 5 + current_offset_x)/40)].type ==0) && (game_world[Math.floor((player.y-1)/40)][Math.floor((player.x + 25 + current_offset_x)/40)].type ==0)){
+	if((game_world[Math.floor((player.y-1)/40)][Math.floor((player.x + 5 + current_offset_x)/40)].type ==0) && 
+	(game_world[Math.floor((player.y-1)/40)][Math.floor((player.x + 25 + current_offset_x)/40)].type ==0)){
 		player.y -=1;
 		player.current_action="jumping";
 		}else{
@@ -69,7 +96,8 @@ if (player.i_y >0){//going up
 	}
 }else if(player.i_y <0){//going down
 	for(i=0;i< -player.i_y;i++){
-		if((game_world[Math.floor((player.y+41)/40)][Math.floor(((player.x + 5) + current_offset_x)/40)].type ==0) && (game_world[Math.floor((player.y+41)/40)][Math.floor(((player.x + 25) + current_offset_x)/40)].type ==0)){
+		if((game_world[Math.floor((player.y+41)/40)][Math.floor(((player.x + 5) + current_offset_x)/40)].type ==0) && 
+		(game_world[Math.floor((player.y+41)/40)][Math.floor(((player.x + 25) + current_offset_x)/40)].type ==0)){
 		player.y +=1;
 		player.current_action="jumping";
 		player.jumpable = 0;

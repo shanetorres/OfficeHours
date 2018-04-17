@@ -4,7 +4,7 @@ if(keysDown[32]) {
  if (paperNo == 0)
  {
     projectile = new Image();
-    projectile.src = "images/tree1.png";
+    projectile.src = "images/paper.png";
     papers.push({shown:paperShown, x: player.x, y: player.y, direction: player.facing, image: projectile, initialX: player.x })
     paperNo++;
     delete projectile;
@@ -12,7 +12,7 @@ if(keysDown[32]) {
  else if (papers[paperNo-1].x > papers[paperNo-1].initialX + 60 && papers[paperNo-1].direction == "right" )
  {
 projectile = new Image();
-projectile.src = "images/tree1.png";
+projectile.src = "images/paper.png";
 papers.push({shown:paperShown, x: player.x, y: player.y, direction: player.facing, image: projectile, initialX: player.x })
 paperNo++;
 delete projectile;
@@ -20,7 +20,7 @@ delete projectile;
  else if (papers[paperNo-1].x < papers[paperNo-1].initialX - 60 && papers[paperNo-1].direction == "left" )
  {
 projectile = new Image();
-projectile.src = "images/tree1.png";
+projectile.src = "images/paper.png";
 papers.push({shown:paperShown, x: player.x, y: player.y, direction: player.facing, image: projectile, initialX: player.x })
 paperNo++;
 delete projectile;
