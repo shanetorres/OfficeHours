@@ -5,13 +5,24 @@ safe_time = 0;
 //move to images after merger.
 enemyc = new Image();//load images.
 enemyc.src = "images/enemy.png";
-create_enemy(800,520,"walker","left"); //this line spawns an enemy
+
+//start area
+create_enemy(800,520,"walker","left");
 create_enemy(2080,480,"walker","left");
+//stone hut
 create_enemy(2760,480,"walker","left");
 create_enemy(3000,480,"walker","left");
 create_enemy(3520,520,"walker","left");
+//tower
 create_enemy(3920,520,"walker","right");
 create_enemy(4080,520,"walker","left");
+//arena
+create_enemy(4560,520,"walker","left");
+create_enemy(4960,520,"walker","right");
+create_enemy(5200,520,"walker","left");
+create_enemy(5320,520,"walker","right");
+create_enemy(5560,520,"walker","left");
+
 function update_enemies(){
 	//update the enemies location/actions.
 	for(i=0;i<enemy_list.length;i++){
