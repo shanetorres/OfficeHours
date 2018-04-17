@@ -1,6 +1,7 @@
 //manage enemies
 enemy_list = [];
 current_id=0;
+safe_time = 0;
 //move to images after merger.
 enemyc = new Image();//load images.
 enemyc.src = "images/enemy.png";
@@ -10,10 +11,35 @@ function update_enemies(){
 	for(i=0;i<enemy_list.length;i++){
 		if (enemy_list[i].type=="walker"){
 			if (enemy_list[i].dir == "left"){
+				if((enemy_list[i].x - 1) >= (player.x + current_offset_x) && (enemy_list[i].x - 1) <= ((player.x + current_offset_x) + 31) && (enemy_list[i].y < player.y + 20) && (enemy_list[i].y > (player.y - 20))){
+					//console.log("hit");
+					if (safe_time == 0){
+						player_hurt();
+					}
+					safe_time = 35;
+					if (safe_time > 0){
+						safe_time -= 1;
+					}
+					player.health -= 1;
+					//hit player
+				}
 				if(game_world[Math.floor((enemy_list[i].y+5)/40)][Math.floor(((enemy_list[i].x - 1))/40)].type ==0){
 					enemy_list[i].x -=1;
 				}else{enemy_list[i].dir="right";}
 			}else{
+				if((enemy_list[i].x + 31) >= (player.x + current_offset_x) && (enemy_list[i].x + 31) <= ((player.x + current_offset_x) + 31) && (enemy_list[i].y < player.y + 20) && (enemy_list[i].y > (player.y - 20))){
+					//console.log("hit");
+					if (safe_time == 0){
+						player_hurt();
+					}
+					safe_time = 35;
+					if (safe_time > 0){
+						safe_time -= 1;
+					}
+					player.health -= 1;
+					//hit player
+				}
+				
 				if(game_world[Math.floor((enemy_list[i].y+5)/40)][Math.floor(((enemy_list[i].x + 31))/40)].type ==0){
 					enemy_list[i].x +=1;
 				}else{enemy_list[i].dir="left";}
