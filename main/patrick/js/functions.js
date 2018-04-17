@@ -34,6 +34,7 @@ function menu(men){
 	}
     if(men == "level_up"){
 		//code to show the level up screen.
+        clear_canvas();
 		ctx.globalAlpha=1;
 		ctx.fillStyle="white";
 		ctx.fillRect(0,0,1000,600);
@@ -42,6 +43,7 @@ function menu(men){
 	}
     if(men == "has_died"){
 		//code to show the level up screen.
+        clear_canvas();
 		ctx.globalAlpha=1;
 		ctx.fillStyle="white";
 		ctx.fillRect(0,0,1000,600);
@@ -76,7 +78,7 @@ function render_gui(){
 }
     
 function render_top(){//display time, name and Score.
-    ctx.fillText("Score: "+score,40,30);
+    ctx.fillText("Score: "+score+" ("+scoreNeeded+")",40,30);
     ctx.fillText("OFFICE HOURS",375,30);
     ctx.fillText("Time "+minute+":"+second,840,30);
     

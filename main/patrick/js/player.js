@@ -111,6 +111,7 @@ if (player.i_y >0){//going up
 playerLevel = 1;
 maxHealth = 1;
 currentHealth = maxHealth; //start player at full health
+scoreNeeded = 500; //points needed to level up
 
 //call if player loses health from an enemy attack
 function player_hurt(){
@@ -142,9 +143,16 @@ function score_block(){
     console.log("Current score  "+score);
 }
 
+//give player points for killing enemies
+function enemy_killed(){
+    score += 150;
+    can_level_up();
+    console.log("Current score  "+score);
+}
+
 //call when player earns points to check if they have enough to level up
 function can_level_up(){
-    if (score >= playerLevel * 450)
+    if (score >= scoreNeeded)
         level_up();
     
     console.log("Current level  "+playerLevel);
@@ -155,6 +163,7 @@ function level_up(){
     playerLevel++;
     maxHealth++; //increase max health
     currentHealth = maxHealth; //heal player to full health
+    scoreNeeded = scoreNeeded + (playerLevel * 500); //set new level up requirement
     game_paused=1;
     clearInterval(update_tick);
     clearInterval(update_timer);
