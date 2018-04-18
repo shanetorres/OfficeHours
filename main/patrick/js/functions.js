@@ -2,17 +2,21 @@ function clear_canvas(){//clears the canvas.
 ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 }
 function pauser(){//handle pausing/unpausing the game.
-	if(game_paused == 1){
-		game_paused=0;
-		update_tick = window.setInterval(update,20);
-		update_timer = window.setInterval(updatet,1000);
-	}else{
-		game_paused=1;
-		clearInterval(update_tick);
-		clearInterval(update_timer);
-		menu("paused");
-	}		
-}
+    if (pausible == true){
+	   if(game_paused == 1){
+		  game_paused=0;
+		  update_tick = window.setInterval(update,20);
+		  update_timer = window.setInterval(updatet,1000);
+	   }else{
+		  game_paused=1;
+		  clearInterval(update_tick);
+		  clearInterval(update_timer);
+		  menu("paused");
+	   }
+    }//end if pausible
+    else
+        console.log("no.");
+}//end pauser
 function update(){//updates and renders the next frame of the game. right now the game is framerate dependant, decoupling would prob be wise.
 	last_call -=.5;//updates the game state, and renders the next frame.
 	clear_canvas();
@@ -50,7 +54,17 @@ function menu(men){
 		ctx.globalAlpha=1.0;
 		ctx.drawImage(image_game_over, 0, 0);
 	}
+    if(men == "end_game"){
+		//code to show the level up screen.
+        clear_canvas();
+		ctx.globalAlpha=1;
+		ctx.fillStyle="white";
+		ctx.fillRect(0,0,1000,600);
+		ctx.globalAlpha=1.0;
+		ctx.drawImage(image_end_game, 0, 0);
 }
+}//end menu
+
 function render_world(){
 	render_background();
 	for (i=0;i<game_world.length;i++){
@@ -118,4 +132,9 @@ function updatet(){
         }
     if (second < 10)
         second = "0"+second;
+}//end updatet
+
+function end_time(){
+    window.addEventListener("keydown", function(e) {//event listeners for 'e', 'p' and the arrow keys.
+		if(e.keyCode == 71){end_game();}});                
 }
