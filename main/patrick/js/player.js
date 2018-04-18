@@ -32,6 +32,7 @@ for(var j = 0; j < enemy_list.length; j++) {
 	if(papers[i].x >= (enemy_list[j].x - 31 + current_offset_x) && papers[i].x <= (enemy_list[j].x +31 + current_offset_x) && papers[i].direction == "right"){
 		// && papers[i].y > (enemy_list[j].y -20) && papers[i].y < (enemy_list[j].y +20)){
 		console.log("paper hit");
+        enemy_killed();
 		papers.splice(i,1);
 		paperNo--;
 		enemy_list.splice(j,1);
@@ -132,6 +133,8 @@ playerLevel = 1;
 maxHealth = 1;
 currentHealth = maxHealth; //start player at full health
 scoreNeeded = 500; //points needed to level up
+chestsOpened = 0;
+enemiesKilled = 0;
 
 //call if player loses health from an enemy attack
 function player_hurt(){
@@ -141,10 +144,10 @@ function player_hurt(){
 
 //call when player loses health to see if they have died
 function can_die(){
+    console.log("Can die?");
+    
     if (currentHealth <= 0)
         has_died();
-    
-    console.log("Can die?");
 }
 
 //call when player dies
@@ -154,11 +157,13 @@ function has_died(){
     clearInterval(update_timer);
     menu("has_died");
     console.log("You died.");
+    end_time();
 }
 
 //give player points for breaking block
 function score_block(){
     score += 25;
+    chestsOpened++;
     can_level_up();
     console.log("Current score  "+score);
 }
@@ -166,6 +171,7 @@ function score_block(){
 //give player points for killing enemies
 function enemy_killed(){
     score += 150;
+    enemiesKilled++;
     can_level_up();
     console.log("Current score  "+score);
 }
@@ -174,8 +180,6 @@ function enemy_killed(){
 function can_level_up(){
     if (score >= scoreNeeded)
         level_up();
-    
-    console.log("Current level  "+playerLevel);
 }
 
 //call when player gets enough score to level up
@@ -189,4 +193,10 @@ function level_up(){
     clearInterval(update_timer);
     menu("level_up");
     console.log("Level Up");
+}
+
+function end_game(){
+    console.log("Hi");
+    menu("end_game");
+    console.log("Game Over.");
 }
