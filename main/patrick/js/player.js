@@ -40,6 +40,7 @@ for(var j = 0; j < enemy_list.length; j++) {
 	else if(papers[i].x >= (enemy_list[j].x - 11 - current_offset_x) && papers[i].x <= (enemy_list[j].x + 11 - current_offset_x) && papers[i].direction == "left"
 		 && papers[i].y > (enemy_list[j].y - 10) && papers[i].y < (enemy_list[j].y +10)){
 		console.log("paper hit");
+        enemy_killed();
 		papers.splice(i,1);
 		paperNo--;
 		enemy_list.splice(j,1);
@@ -124,7 +125,7 @@ if (player.i_y >0){//going up
 	}
 }
 }
-}
+}//end update player
 
 
 //Player Level and Health Handling
@@ -155,6 +156,8 @@ function has_died(){
     game_paused=1;
     clearInterval(update_tick);
     clearInterval(update_timer);
+    pausible = false;
+    gameComplete = false;
     menu("has_died");
     console.log("You died.");
     end_time();
@@ -165,7 +168,7 @@ function score_block(){
     score += 25;
     chestsOpened++;
     can_level_up();
-    console.log("Current score  "+score);
+    console.log("Chest opened");
 }
 
 //give player points for killing enemies
@@ -173,7 +176,7 @@ function enemy_killed(){
     score += 150;
     enemiesKilled++;
     can_level_up();
-    console.log("Current score  "+score);
+    console.log("Enemy killed");
 }
 
 //call when player earns points to check if they have enough to level up
@@ -188,6 +191,9 @@ function level_up(){
     maxHealth++; //increase max health
     currentHealth = maxHealth; //heal player to full health
     scoreNeeded = scoreNeeded + (playerLevel * 500); //set new level up requirement
+    //3000 points is the max that can be earned
+    if (scoreNeeded > 3000) 
+        scoreNeeded = 3000;
     game_paused=1;
     clearInterval(update_tick);
     clearInterval(update_timer);
@@ -199,7 +205,82 @@ function end_game(){
 	game_paused = 1;
 	clearInterval(update_tick);
 	clearInterval(update_timer);
-    console.log("Hi");
+    pausible = false;
     menu("end_game");
     console.log("Game Over.");
+    game_results();
 }
+
+//display game stats and final score
+//example: ctx.fillText("OFFICE HOURS",375,30); x-axis,y-axis
+function game_results(){
+    ctx.globalAlpha = 1;
+    ctx.fillStyle="black";
+    ctx.font = "30px Mario";
+    ctx.fillText("GAME OVER",420,175);
+    ctx.fillText(chestsOpened,365,270);
+    ctx.fillText((chestsOpened * 25),425,270);
+    ctx.fillText("LEVEL",520,265);
+    ctx.fillText(playerLevel,655,265);
+    ctx.fillText(enemiesKilled,365,330);
+    ctx.fillText((enemiesKilled * 150),425,330);
+    
+    //print out health and health multiplier
+    currentPlace = 520;
+    for(i=0; i<currentHealth; i++){//loop to display all hearts
+        ctx.drawImage(heart, currentPlace, 280);
+        currentPlace = currentPlace + 32;
+    }//end for
+    for(i=0; i<(maxHealth - currentHealth); i++){//loop to display lost hearts
+        ctx.drawImage(hurtheart, currentPlace, 280);
+        currentPlace = currentPlace + 32;
+    }//end for
+    if (currentHealth == 0){
+        healthMultiplier = 1;
+    }
+    else{
+        healthMultiplier = currentHealth;
+    }
+    ctx.fillText(healthMultiplier,655,300);
+    
+    //print out time and time multiplier
+    ctx.fillText(minute+":"+second,520,337);
+    time = (minute * 60) + second;
+    console.log(time);
+
+    if (gameComplete == false){
+        timeMultiplier = 1;
+        console.log("not complete");
+    }//end if
+    else{
+        if (time > 150){//more than 2.5 mins
+            timeMultiplier = 0.5;
+        }
+        else if (time > 120){//more than 2 mins
+            timeMultiplier = 1;
+        }
+        else if (time > 90){//more than 1.5 mins
+            timeMultiplier = 2;
+        }
+        else if (time > 60){//more than 1 min
+            timeMultiplier = 3;
+        }
+        else if (time > 30){//more than 0.5 min
+            timeMultiplier = 4;
+        }
+        else{
+            timeMultiplier = 1;
+            console.log("problem");
+        }
+        }//end else  
+    
+    ctx.fillText(timeMultiplier,655,337);
+    
+    //display score, multipiers and final score
+    ctx.fillText(score,365,382);
+    finalMultiplier = playerLevel + healthMultiplier + timeMultiplier;
+    ctx.fillText(finalMultiplier,490,382);
+    finalScore = score * finalMultiplier;
+    ctx.fillText(finalScore,570,382);
+    
+}//end of game results
