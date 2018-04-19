@@ -196,6 +196,9 @@ function level_up(){
 }
 
 function end_game(){
+	game_paused = 1;
+	clearInterval(update_tick);
+	clearInterval(update_timer);
     console.log("Hi");
     menu("end_game");
     console.log("Game Over.");
