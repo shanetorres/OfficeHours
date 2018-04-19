@@ -241,7 +241,7 @@ function game_results(){
         currentPlace = currentPlace + 32;
     }//end for
     if (currentHealth == 0){
-        healthMultiplier = 1;
+        healthMultiplier = 0;
     }
     else{
         healthMultiplier = currentHealth;
@@ -260,18 +260,23 @@ function game_results(){
     else{
         if (time > 150){//more than 2.5 mins
             timeMultiplier = 0.5;
+            console.log("very slow")
         }
         else if (time > 120){//more than 2 mins
             timeMultiplier = 1;
+            console.log("slow")
         }
         else if (time > 90){//more than 1.5 mins
             timeMultiplier = 2;
+            console.log("average")
         }
         else if (time > 60){//more than 1 min
             timeMultiplier = 3;
+            console.log("fast")
         }
         else if (time > 30){//more than 0.5 min
             timeMultiplier = 4;
+            console.log("very fast")
         }
         else{
             timeMultiplier = 1;
