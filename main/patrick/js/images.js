@@ -28,3 +28,5 @@ paper = new Image();
 paper.src = "images/paper.png";
 image_game_over = new Image();
 image_game_over.src = "images/game_over.png";
+image_end_game = new Image();
+image_end_game.src = "images/end_game.png";

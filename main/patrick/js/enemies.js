@@ -18,10 +18,10 @@ create_enemy(3920,520,"walker","right");
 create_enemy(4080,520,"walker","left");
 //arena
 create_enemy(4560,520,"walker","left");
-create_enemy(4960,520,"walker","right");
-create_enemy(5200,520,"walker","left");
-create_enemy(5320,520,"walker","right");
-create_enemy(5560,520,"walker","left");
+create_enemy(4960,480,"walker","right");
+create_enemy(5200,480,"walker","left");
+create_enemy(5320,480,"walker","right");
+create_enemy(5560,480,"walker","left");
 
 function update_enemies(){
 	//update the enemies location/actions.

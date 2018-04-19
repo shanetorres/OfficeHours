@@ -12,3 +12,4 @@ function switch_bg(){
 	}else{document.getElementById("gameCanvas").style.backgroundColor = "#3BB9FF";bg_col=1;
 	}}
 }
+game_world[10][148].affect_hit=function(){end_game();}; //finish game
