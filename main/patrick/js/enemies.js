@@ -5,7 +5,7 @@ safe_time = 0;
 //move to images after merger.
 enemyc = new Image();//load images.
 enemyc.src = "images/enemy.png";
-
+recentlyhit = false;
 //start area
 create_enemy(800,520,"walker","left");
 create_enemy(2080,480,"walker","left");
@@ -47,13 +47,20 @@ function update_enemies(){
 				if((enemy_list[i].x + 31) >= (player.x + current_offset_x) && (enemy_list[i].x + 31) <= ((player.x + current_offset_x) + 31) && (enemy_list[i].y < player.y + 20) && (enemy_list[i].y > (player.y - 20))){
 					//console.log("hit");
 					if (safe_time == 0){
+						recentlyhit = true;
 						player_hurt();
+						safe_time = 35;
 					}
-					safe_time = 35;
-					if (safe_time > 0){
+					
+					if (safe_time > 0 & recentlyhit == true){
 						safe_time -= 1;
 					}
-					player.health -= 1;
+					if (safe_time == 0)
+					{
+						recentlyhit = false;
+					}
+
+					//player.health -= 1;
 					//hit player
 				}
 				
