@@ -159,6 +159,11 @@ function has_died(){
     pausible = false;
     gameComplete = false;
     menu("has_died");
+    ctx.globalAlpha = 1;
+    ctx.fillStyle="black";
+    ctx.font = "30px Mario";
+    ctx.fillText("DEAD",462,175);
+    ctx.fillText("Press 'G' to continue...",345,465);
     console.log("You died.");
     end_time();
 }
