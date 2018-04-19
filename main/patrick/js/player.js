@@ -29,15 +29,15 @@ player.i_x = 0;
 for(var j = 0; j < enemy_list.length; j++) {
 
 	for(var i = 0; i < paperNo; i++){
-	if(papers[i].x >= (enemy_list[j].x - 31 + current_offset_x) && papers[i].x <= (enemy_list[j].x +31 + current_offset_x) && papers[i].direction == "right"){
-		// && papers[i].y > (enemy_list[j].y -20) && papers[i].y < (enemy_list[j].y +20)){
+	if(papers[i].x >= (enemy_list[j].x - 11 - current_offset_x) && papers[i].x <= (enemy_list[j].x + 11 - current_offset_x) && papers[i].direction == "right"
+		 && papers[i].y > (enemy_list[j].y -20) && papers[i].y < (enemy_list[j].y +20)){
 		console.log("paper hit");
 		papers.splice(i,1);
 		paperNo--;
 		enemy_list.splice(j,1);
 	}
-	else if(papers[i].x >= (enemy_list[j].x - 31 - current_offset_x) && papers[i].x <= (enemy_list[j].x +31 - current_offset_x) && papers[i].direction == "left"){
-		// && papers[i].y > (enemy_list[j].y -20) && papers[i].y < (enemy_list[j].y +20)){
+	else if(papers[i].x >= (enemy_list[j].x - 11 - current_offset_x) && papers[i].x <= (enemy_list[j].x + 11 - current_offset_x) && papers[i].direction == "left"
+		 && papers[i].y > (enemy_list[j].y - 10) && papers[i].y < (enemy_list[j].y +10)){
 		console.log("paper hit");
 		papers.splice(i,1);
 		paperNo--;
